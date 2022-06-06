@@ -1,10 +1,13 @@
+import { injectable } from 'inversify';
 import { Logger } from 'tslog';
+import { ILogger } from './logger.interface';
 /*
 LoggerService - абстракция для стандартного npm модуля tslog
 которая скрывает опции настройки для модуля, а также добавляет
 возможность дальнейшего расширения функционала
 */
-export class LoggerService {
+@injectable()
+export class LoggerService implements ILogger {
     public logger: Logger;
 
     constructor() {
