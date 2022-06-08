@@ -3,11 +3,11 @@
 // function Injectable(key: string) {
 //     const metaValue: number = 1;
 //     return (target: Function) => {
-//         Reflect.defineMetadata(key, metaValue, target);//связывание объекта target с ключем по которому затем можно обратиться к этому объекту во время выполнения        
+//         Reflect.defineMetadata(key, metaValue, target);//связывание объекта target с ключем по которому затем можно обратиться к этому объекту во время выполнения
 //     }
 // }
 
-// function Inject(key: string){    
+// function Inject(key: string){
 //     return (target: Function) => {
 //         Reflect.getMetadata(key, target);
 //     }
@@ -23,4 +23,3 @@
 // export class D {
 //     constructor(@Inject('C') c: C) { }
 // }
-
