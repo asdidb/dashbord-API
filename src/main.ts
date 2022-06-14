@@ -14,6 +14,11 @@ import { TYPES } from './types';
 import { IUserController } from './users/users.controller.interface';
 import { IUserService } from './users/user.service.interface';
 import { UserService } from './users/user.service';
+import { IConfigService } from './config/config.service.interface';
+import { ConfigService } from './config/config.service';
+import { PrismaService } from './database/prisma.service';
+import { IUsersRepository } from './users/users.repository.interface';
+import { UsersRepository } from './users/users.repository';
 
 export interface IBootstrapReturn {
 	appContainer: Container;
@@ -22,11 +27,14 @@ export interface IBootstrapReturn {
 
 //использование ContainerModule из inversify для создания модуля зависимостей
 export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
-	bind<ILogger>(TYPES.ILogger).to(LoggerService);
+	bind<ILogger>(TYPES.ILogger).to(LoggerService).inSingletonScope(); //создается только один экземляр класса при @inject
 	bind<IExeptionFilter>(TYPES.ExceptionFilter).to(ExceptionFilter);
 	bind<IUserController>(TYPES.UserController).to(UserController);
 	bind<IUserService>(TYPES.UserService).to(UserService);
-	bind<App>(TYPES.Application).to(App);
+	bind<IConfigService>(TYPES.ConfigService).to(ConfigService).inSingletonScope();
+	bind<App>(TYPES.Application).to(App).inSingletonScope();
+	bind<PrismaService>(TYPES.PrismaService).to(PrismaService).inSingletonScope();
+	bind<IUsersRepository>(TYPES.UsersRepository).to(UsersRepository).inSingletonScope();
 });
 function bootstrap(): IBootstrapReturn {
 	const appContainer = new Container(); //из inversify
