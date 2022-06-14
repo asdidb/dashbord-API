@@ -36,11 +36,11 @@ export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<PrismaService>(TYPES.PrismaService).to(PrismaService).inSingletonScope();
 	bind<IUsersRepository>(TYPES.UsersRepository).to(UsersRepository).inSingletonScope();
 });
-function bootstrap(): IBootstrapReturn {
+async function bootstrap(): Promise<IBootstrapReturn> {
 	const appContainer = new Container(); //из inversify
 	appContainer.load(appBindings); //добавление набора биндингов к контейнеру
 	const app = appContainer.get<App>(TYPES.Application);
 	app.init();
 	return { appContainer, app };
 }
-export const { app, appContainer } = bootstrap();
+export const boot = bootstrap();
